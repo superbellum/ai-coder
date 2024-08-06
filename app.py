@@ -1,17 +1,15 @@
 import streamlit as st
-from openai import OpenAI
 
-client = OpenAI()
+from message import Message
+from model import OpenaiModel
+
+model = OpenaiModel()
 
 st.title("AI-coder app")
 
 
-def get_answer_from_model(question: str) -> str:
-    return client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": question}],
-        max_tokens=150
-    ).choices[0].message.content
+def get_answer_from_model(question_text: str) -> str:
+    return model.get_answer(question=Message(question_text))
 
 
 def send_question():
